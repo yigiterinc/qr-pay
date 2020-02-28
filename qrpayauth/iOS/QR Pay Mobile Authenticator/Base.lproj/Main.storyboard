@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="D8_Games_Mobile_Authenticator" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square.png" translatesAutoresizingMaskIntoConstraints="NO" id="y8g-48-6s1">
+                                <rect key="frame" x="50" y="211" width="314" height="314"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="y8g-48-6s1" secondAttribute="height" multiplier="1:1" id="DJt-Lx-Zty"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MAs-O6-gZL">
+                                <rect key="frame" x="0.0" y="716" width="414" height="0.0"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="y8g-48-6s1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="50" id="16C-Js-CVD"/>
+                            <constraint firstItem="y8g-48-6s1" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="fIE-Sw-0uF"/>
+                            <constraint firstItem="MAs-O6-gZL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="fTj-sE-Sc4"/>
+                            <constraint firstItem="y8g-48-6s1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qcc-t0-Tc2"/>
+                            <constraint firstItem="MAs-O6-gZL" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="rRE-Zx-Q6c"/>
+                            <constraint firstAttribute="trailing" secondItem="y8g-48-6s1" secondAttribute="trailing" constant="50" id="uWJ-ah-5zw"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="MAs-O6-gZL" secondAttribute="bottom" constant="20" id="xdF-S4-Hmw"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="square" destination="y8g-48-6s1" id="VeT-Nb-opm"/>
+                        <outlet property="uuidLabel" destination="MAs-O6-gZL" id="BGB-hy-axb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="square.png" width="1100" height="1100"/>
+    </resources>
+</document>
