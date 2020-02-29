@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-nati
 import { Container, Header, Content, Input, Item, Body, Left, Button, Right, Title } from 'native-base';
 
 import QRCode from 'react-native-webview-qrcode';
+import Dialog, { DialogFooter, DialogButton, DialogContent } from 'react-native-popup-dialog';
 
 import RequestJson from './requestData.json';
 import company from './company.json';
@@ -15,8 +16,9 @@ export default class App extends React.Component {
       price: '',
       companyName: '',
       companyIBAN: '',
-      jsonStringified: 'wroıoıong',
-      showQR: false
+      jsonStringified: '',
+      showQR: false,
+      isTransactionSucceed: false,
     }
   }
 
@@ -26,6 +28,26 @@ export default class App extends React.Component {
       companyIBAN: company.iban
       });
   }
+
+  async componentDidMount() {
+    try {
+      setInterval(async () => {
+        const res = await fetch('https://finside.co/api/qr-pay/read').then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+          if (data.authenticated === null) {
+            this.setState({
+              isTransactionSucceed: true
+            });
+          }
+        });
+      }, 1000);
+    } catch(e) {
+      console.log(e);
+    }
+}
 
   render() {
     return (
@@ -39,7 +61,7 @@ export default class App extends React.Component {
         </Header>
 
         <Content style={styles.content}>
-          <Text style={styles.greeting}>{this.state.companyName}</Text>
+          <Text style={styles.greeting}>Alternatif Bank</Text>
 
           <View style={styles.priceFieldContainer}>
             <Item regular style={styles.priceBox}>
@@ -60,11 +82,39 @@ export default class App extends React.Component {
           <View style={styles.qrContainer}>
             { this.displayQR() }
           </View>
-          
+
+          <View style={styles.container}>
+            <Dialog
+              visible={this.state.isTransactionSucceed}
+              footer={
+                <DialogFooter>
+                  <DialogButton
+                    text="OK"
+                    onPress={() => {this.toggleDialog()}}
+                  />
+                </DialogFooter>
+              }
+            >
+              <DialogContent>
+                <Text>
+                  Transaction successfully completed
+              </Text>   
+              </DialogContent>
+            </Dialog>
+          </View> 
+
           
         </Content>
       </Container>
     )
+  }
+
+  toggleDialog = () => {
+    this.setState({
+      isTransactionSucceed: false
+    });
+
+    fetch('https://finside.co/api/qr-pay/receive?authenticated=-1')
   }
 
   onChangeText = (text) => {
