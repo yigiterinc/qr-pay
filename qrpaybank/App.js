@@ -1,18 +1,29 @@
 import React from 'react';
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
-import { Container, Header, Content, Input, Item, Body, Left, Button, Right, Title, Icon } from 'native-base';
-import {KeyboardAvoidingView} from 'react-native'
-
+import { Container, Header, Content, Input, Item, Body, Left, Button, Right, Title } from 'native-base';
 
 import QRCode from 'react-native-webview-qrcode';
 
+import RequestJson from './requestData.json';
+import company from './company.json';
+
+
 export default class App extends React.Component {
   constructor() {
-    super()
+    super();
     this.state = {
       price: '',
+      companyName: '',
+      companyIBAN: '',
       showQR: false
     }
+  }
+
+  componentDidMount() {
+    this.setState({
+      companyName: company.name,
+      companyIBAN: company.iban
+      });
   }
 
   render() {
@@ -27,7 +38,7 @@ export default class App extends React.Component {
         </Header>
 
         <Content style={styles.content}>
-          <Text style={styles.greeting}>QR-Odeme - Happy Moons Fenerbahce</Text>
+          <Text style={styles.greeting}>{this.state.companyName}</Text>
 
           <View style={styles.priceFieldContainer}>
             <Item regular style={styles.priceBox}>
@@ -36,7 +47,11 @@ export default class App extends React.Component {
           </View>
         
           <View style={styles.buttonContainer}>
-            <Button primary style={styles.buttonStyle} onPress={() =>  {this.setState({showQR: true})}}>
+            <Button primary style={styles.buttonStyle} onPress={() => {
+              this.updateJsonFile();
+              this.setState({showQR: true});
+            }
+              }>
               <Text style={styles.buttonText}>QR Oluştur</Text>
             </Button>
           </View>
@@ -55,15 +70,21 @@ export default class App extends React.Component {
     if (this.state.price !== 0) {
       this.setState({
         price: text,
-        showQR: !this.state.showQR
+        showQR: false
       });
     }
+  }
+
+  updateJsonFile = () => {
+    RequestJson.data.Message.TransferAmount.Value = this.state.price;
+    RequestJson.data.Message.SourceAccount.IBAN = this.state.companyIBAN;
+
   }
 
   displayQR = () => {
     if (this.state.showQR) {      
       return   <QRCode
-      value={this.state.price}
+      value={RequestJson}
       size={250}
       bgColor="#000"
       fgColor="#fff"
