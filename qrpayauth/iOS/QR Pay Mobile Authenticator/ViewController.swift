@@ -51,11 +51,22 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         session.startRunning()
     }
     
+    func speak() {
+        // Line 1. Create an instance of AVSpeechSynthesizer.
+        let speechSynthesizer = AVSpeechSynthesizer()
+        let speech = self.qrResponse + " işlem yapılıyor, onaylıyor musunuz?"
+        let speechUtterance: AVSpeechUtterance = AVSpeechUtterance(string: speech)
+        speechUtterance.rate = AVSpeechUtteranceMaximumSpeechRate / 2.0
+        speechUtterance.voice = AVSpeechSynthesisVoice(language: "tr-TR")
+        speechSynthesizer.speak(speechUtterance)
+    }
+    
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         if self.qrResponse == "" && metadataObjects != nil && metadataObjects.count != 0 {
             if let object = metadataObjects[0] as? AVMetadataMachineReadableCodeObject {
                 if object.type == AVMetadataObject.ObjectType.qr {
                     self.qrResponse = object.stringValue!
+                    speak()
                     
                     /*
                     ---> Un-comment the following for making a POST request

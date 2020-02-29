@@ -38,10 +38,13 @@ export default class App extends React.Component {
             </Item>
 
             <Button primary style={styles.buttonStyle} onPress={() =>  {this.setState({showQR: true})}}>
-              {this.state.showQR && (
+              <Text style={styles.buttonText}>QR Oluştur</Text>
+            </Button>
+
+            {this.state.showQR && (
                   <QRCode
                     value={this.state.price}
-                    style={{position: 'absolute', bottom: 0}}
+                    style={{position: 'absolute', bottom: 0, marginTop: 100, marginLeft: 50}}
                     //Setting the value of QRCode
                     size={250}
                     //Size of QRCode
@@ -52,9 +55,6 @@ export default class App extends React.Component {
               />
               ) 
               }
-                
-              <Text style={styles.buttonText}>QR Oluştur</Text>
-            </Button>
           </Content>
         </Container>
       </KeyboardAvoidingView>
@@ -63,9 +63,11 @@ export default class App extends React.Component {
   }
 
   onChangeText = (text) => {
-    this.setState({
-      price: text
-    });
+    if (!this.state.showQR) {
+      this.setState({
+        price: text
+      });
+    }
   }
 }
 
