@@ -15,6 +15,7 @@ export default class App extends React.Component {
       price: '',
       companyName: '',
       companyIBAN: '',
+      jsonStringified: 'wroıoıong',
       showQR: false
     }
   }
@@ -79,12 +80,13 @@ export default class App extends React.Component {
     RequestJson.data.Message.TransferAmount.Value = this.state.price;
     RequestJson.data.Message.SourceAccount.IBAN = this.state.companyIBAN;
 
+    console.log()
   }
 
   displayQR = () => {
     if (this.state.showQR) {      
       return   <QRCode
-      value={RequestJson}
+      value={this.state.price}
       size={250}
       bgColor="#000"
       fgColor="#fff"
