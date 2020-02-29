@@ -285,11 +285,11 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MGRXZA9ZDS;
+				DEVELOPMENT_TEAM = 3793B36N9C;
 				INFOPLIST_FILE = "QR Pay Mobile Authenticator/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "yigitcemal.QR-Pay-Mobile-Authenticator";
+				PRODUCT_BUNDLE_IDENTIFIER = "yigitcemalapp.QR-Pay-Mobile-Authenticator";
 				PRODUCT_NAME = "QR Auth";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
@@ -304,11 +304,11 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3793B36N9C;
 				INFOPLIST_FILE = "QR Pay Mobile Authenticator/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "yigitcemal.QR-Pay-Mobile-Authenticator";
+				PRODUCT_BUNDLE_IDENTIFIER = "yigitcemalapp.QR-Pay-Mobile-Authenticator";
 				PRODUCT_NAME = "QR Auth";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;

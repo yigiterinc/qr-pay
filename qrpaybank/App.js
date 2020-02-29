@@ -1,30 +1,72 @@
 import React from 'react';
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
 import { Container, Header, Content, Input, Item, Body, Left, Button, Right, Title, Icon } from 'native-base';
+import {KeyboardAvoidingView} from 'react-native'
 
-export default function App() {
-  return (
-      <Container>
-        <Header>
-          <Left/>
-            <Body>
-              <Title>QR Pay</Title>
-            </Body>
-          <Right/>
-        </Header>
 
-        <Content style={styles.content}>
-          <Text style={styles.greeting}>QR-Odeme - Happy Moons Fenerbahce</Text>
-          <Text style={styles.price}>Price</Text>
-          <Item regular style={styles.priceBox}>
-            <Input placeholder='Price'/>
-          </Item>
-          <Button primary style={styles.buttonStyle}>
-            <Text style={styles.buttonText}>QR Oluştur</Text>
-          </Button>
-        </Content>
-      </Container>
+import QRCode from 'react-native-webview-qrcode';
+
+export default class App extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      price: '',
+      showQR: false
+    }
+  }
+
+  render() {
+    return (
+      <KeyboardAvoidingView  keyboardVerticalOffset = {Header.HEIGHT + 20}
+      style = {{flex: 1}}
+      behavior = "padding">
+        <Container>
+          <Header>
+            <Left/>
+              <Body>
+                <Title>QR Pay</Title>
+              </Body>
+            <Right/>
+          </Header>
+
+          <Content style={styles.content}>
+            <Text style={styles.greeting}>QR-Odeme - Happy Moons Fenerbahce</Text>
+
+            <Text style={styles.price}>Price</Text>
+            <Item regular style={styles.priceBox}>
+              <Input placeholder='Price' onChangeText={text => this.onChangeText(text)}/>
+            </Item>
+
+            <Button primary style={styles.buttonStyle} onPress={() =>  {this.setState({showQR: true})}}>
+              {this.state.showQR && (
+                  <QRCode
+                    value={this.state.price}
+                    style={{position: 'absolute', bottom: 0}}
+                    //Setting the value of QRCode
+                    size={250}
+                    //Size of QRCode
+                    bgColor="#000"
+                    //Backgroun Color of QRCode
+                    fgColor="#fff"
+                    //Front Color of QRCode
+              />
+              ) 
+              }
+                
+              <Text style={styles.buttonText}>QR Oluştur</Text>
+            </Button>
+          </Content>
+        </Container>
+      </KeyboardAvoidingView>
+
   )
+  }
+
+  onChangeText = (text) => {
+    this.setState({
+      price: text
+    });
+  }
 }
 
 const styles = StyleSheet.create({
