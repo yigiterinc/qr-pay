@@ -98,14 +98,10 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                     let _ = self.getApiResponse(url: "https://finside.co/api/qr-pay/receive", params: nil, isGet: true, hasBody: false, body: NSDictionary())
                     
                     while (0 == 0) {
-                        sleep(1000)
-                        
-                        let yigit = self.getApiResponse(url: "https://finside.co/api/qr-pay/read", params: nil, isGet: true, hasBody: false, body: NSDictionary())
-                        
                         do {
-                            let y = try yigit["authenticated"] as! String == "-1"
-                            
-                            if (y) {
+                            let mes = self.getApiResponse(url: "https://finside.co/api/qr-pay/read", params: nil, isGet: true, hasBody: false, body: NSDictionary())
+
+                            if (mes["authenticated"] as? String == "-1") {
                                 let alert2 = UIAlertController(title: "Success", message: "Transaction is completed", preferredStyle: .alert)
                                 alert2.addAction(UIAlertAction(title: "Okay", style: .default, handler: { (nil) in
                                     self.qrResponse = ""
@@ -151,7 +147,7 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     func speak(price: String) {
         let speechSynthesizer = AVSpeechSynthesizer()
-        let speech = price + " işlem yapılıyor, onaylıyor musunuz?"
+        let speech = price + " TL işlem yapılıyor, onaylıyor musunuz?"
         let speechUtterance: AVSpeechUtterance = AVSpeechUtterance(string: speech)
         
         speechUtterance.rate = AVSpeechUtteranceMaximumSpeechRate / 2.0
