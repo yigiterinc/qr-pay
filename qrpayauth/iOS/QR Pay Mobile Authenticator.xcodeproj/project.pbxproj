@@ -14,6 +14,8 @@
 		74EDAC8A218DF6D800FF2F81 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74EDAC88218DF6D800FF2F81 /* Main.storyboard */; };
 		74EDAC8C218DF6D800FF2F81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74EDAC8B218DF6D800FF2F81 /* Assets.xcassets */; };
 		74EDAC8F218DF6D800FF2F81 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74EDAC8D218DF6D800FF2F81 /* LaunchScreen.storyboard */; };
+		A0F72553240A9BD9004A8B15 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F72552240A9BD9004A8B15 /* SwiftyJSON.swift */; };
+		A0F72555240A9D94004A8B15 /* test.json in Resources */ = {isa = PBXBuildFile; fileRef = A0F72554240A9D93004A8B15 /* test.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,9 @@
 		74EDAC8B218DF6D800FF2F81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		74EDAC8E218DF6D800FF2F81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		74EDAC90218DF6D800FF2F81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A0F72551240A9481004A8B15 /* QR Auth.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "QR Auth.entitlements"; sourceTree = "<group>"; };
+		A0F72552240A9BD9004A8B15 /* SwiftyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		A0F72554240A9D93004A8B15 /* test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +47,7 @@
 		74EDAC78218DF6D800FF2F81 = {
 			isa = PBXGroup;
 			children = (
+				A0F72551240A9481004A8B15 /* QR Auth.entitlements */,
 				74EDAC83218DF6D800FF2F81 /* QR Pay Mobile Authenticator */,
 				74EDAC82218DF6D800FF2F81 /* Products */,
 			);
@@ -58,6 +64,7 @@
 		74EDAC83218DF6D800FF2F81 /* QR Pay Mobile Authenticator */ = {
 			isa = PBXGroup;
 			children = (
+				A0F72554240A9D93004A8B15 /* test.json */,
 				74EDAC84218DF6D800FF2F81 /* AppDelegate.swift */,
 				74EDAC86218DF6D800FF2F81 /* ViewController.swift */,
 				74EDAC88218DF6D800FF2F81 /* Main.storyboard */,
@@ -66,6 +73,7 @@
 				74EDAC90218DF6D800FF2F81 /* Info.plist */,
 				747A8411218E167B0011C7C2 /* black.png */,
 				747A840F218E06C10011C7C2 /* square.png */,
+				A0F72552240A9BD9004A8B15 /* SwiftyJSON.swift */,
 			);
 			path = "QR Pay Mobile Authenticator";
 			sourceTree = "<group>";
@@ -134,6 +142,7 @@
 				74EDAC8C218DF6D800FF2F81 /* Assets.xcassets in Resources */,
 				74EDAC8A218DF6D800FF2F81 /* Main.storyboard in Resources */,
 				747A8412218E167B0011C7C2 /* black.png in Resources */,
+				A0F72555240A9D94004A8B15 /* test.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,6 +153,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0F72553240A9BD9004A8B15 /* SwiftyJSON.swift in Sources */,
 				74EDAC87218DF6D800FF2F81 /* ViewController.swift in Sources */,
 				74EDAC85218DF6D800FF2F81 /* AppDelegate.swift in Sources */,
 			);
@@ -282,6 +292,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "QR Auth.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -301,6 +312,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "QR Auth.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;

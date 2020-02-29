@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  QR Pay Mobile Authenticator
-//
-//  Created by Batuhan Erden on 03/11/2018.
-//  Copyright © 2018 Batuhan Erden. All rights reserved.
-//
-
 import UIKit
 
 @UIApplicationMain

@@ -2,13 +2,11 @@
 //  ViewController.swift
 //  QR Pay Mobile Authenticator
 //
-//  Created by Batuhan Erden on 03/11/2018.
-//  Copyright © 2018 Batuhan Erden. All rights reserved.
-//
 
 import UIKit
 import AVFoundation
 import AudioToolbox
+import Speech
 
 class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
@@ -21,11 +19,13 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.setKey()
         
         let session = AVCaptureSession()
         let captureDevice = AVCaptureDevice.default(for: AVMediaType.video)
+        
+        // TODO: Remove the following line of code!!! You master!!!
+        let price = getPriceFromFile(fileName: "test")
         
         do {
             let input = try AVCaptureDeviceInput(device: captureDevice!)
@@ -51,43 +51,6 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         session.startRunning()
     }
     
-    func speak() {
-        // Line 1. Create an instance of AVSpeechSynthesizer.
-        let speechSynthesizer = AVSpeechSynthesizer()
-        let speech = self.qrResponse + " işlem yapılıyor, onaylıyor musunuz?"
-        let speechUtterance: AVSpeechUtterance = AVSpeechUtterance(string: speech)
-        speechUtterance.rate = AVSpeechUtteranceMaximumSpeechRate / 2.0
-        speechUtterance.voice = AVSpeechSynthesisVoice(language: "tr-TR")
-        speechSynthesizer.speak(speechUtterance)
-    }
-    
-    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        if self.qrResponse == "" && metadataObjects != nil && metadataObjects.count != 0 {
-            if let object = metadataObjects[0] as? AVMetadataMachineReadableCodeObject {
-                if object.type == AVMetadataObject.ObjectType.qr {
-                    self.qrResponse = object.stringValue!
-                    speak()
-                    
-                    /*
-                    ---> Un-comment the following for making a POST request
-                    let postAuthenticationApiRequestUrl = "http://bank.com/api/"
-                    let postAuthenticationApiRequestParams = "id=" + self.qrResponse + "&key=" + self.key
-                    
-                    _ = self.getApiResponse(url: postAuthenticationApiRequestUrl, params: postAuthenticationApiRequestParams)
-                    
-                    let alert = UIAlertController(title: "Success", message: "QR Code is successfully read!", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: { (nil) in
-                        self.qrResponse = ""
-                    }))
-                    
-                    AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-                    present(alert, animated: true, completion: nil)
-                    */
-                }
-            }
-        }
-    }
-    
     func setKey() -> Void {
         if let uuid = UIDevice.current.identifierForVendor?.uuidString {
             self.key = uuid
@@ -95,7 +58,109 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         }
     }
     
-    func getApiResponse(url: String, params: String? = nil) -> NSDictionary {
+    // TODO: Remove this function when actual qr json response is being taken into the account!
+    func getPriceFromFile(fileName: String) -> Double {
+        if let path = Bundle.main.path(forResource: fileName, ofType: "json") {
+            do {
+                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+                
+                if let jsonObject = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String:Any] {
+                    return getPriceFromQrJson(jsonObject: jsonObject)
+                }
+            } catch {
+                print("An error occurred while reading price from qr json!")
+            }
+        }
+        
+        return -1.0
+    }
+    
+    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+        if self.qrResponse == "" && metadataObjects != nil && metadataObjects.count != 0 {
+            if let object = metadataObjects[0] as? AVMetadataMachineReadableCodeObject {
+                if object.type == AVMetadataObject.ObjectType.qr {
+                    self.qrResponse = object.stringValue!
+                    
+                    speak(price: self.qrResponse)
+                    
+                    let bankRequestBody = self.getApiResponse(url: "https://finside.co/api/qr-pay/prepare", params: "?price=" + self.qrResponse + "&ip=" + self.getIp(), isGet: true, hasBody: false, body: NSDictionary())
+                    
+                    let alert = UIAlertController(title: "Success", message: "QR Code is successfully read!", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: { (nil) in
+                        self.qrResponse = ""
+                    }))
+                    
+                    
+                    let bankResponse = self.getApiResponse(url: "https://ybpb2b.alternatifbank.com.tr/ExternalGatewayAPI/api/home/executeCommand/", params: nil, isGet: false, hasBody: true, body: bankRequestBody)
+                    
+                    print(bankResponse)
+                    
+                    let _ = self.getApiResponse(url: "https://finside.co/api/qr-pay/receive", params: nil, isGet: true, hasBody: false, body: NSDictionary())
+                    
+                    while (0 == 0) {
+                        sleep(1000)
+                        
+                        let yigit = self.getApiResponse(url: "https://finside.co/api/qr-pay/read", params: nil, isGet: true, hasBody: false, body: NSDictionary())
+                        
+                        do {
+                            let y = try yigit["authenticated"] as! String == "-1"
+                            
+                            if (y) {
+                                let alert2 = UIAlertController(title: "Success", message: "Transaction is completed", preferredStyle: .alert)
+                                alert2.addAction(UIAlertAction(title: "Okay", style: .default, handler: { (nil) in
+                                    self.qrResponse = ""
+                                }))
+                                
+                                present(alert2, animated: true, completion: nil)
+                                break;
+                            }
+                        } catch {
+                            print("ERRTRRR")
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func getPriceFromQrJsonRepsonse(qrJsonResponse: String) -> Double {
+        let data = qrJsonResponse.data(using: .utf8)!
+
+        do {
+            if let jsonObject = try JSONSerialization.jsonObject(with: data, options : .allowFragments) as? [String:Any] {
+                return getPriceFromQrJson(jsonObject: jsonObject)
+            }
+        } catch {
+            print("An error occurred while handling price!")
+        }
+
+        return -1.0
+    }
+    
+    func getPriceFromQrJson(jsonObject: [String:Any]) -> Double {
+        if let data = jsonObject["data"] as? [String:AnyObject] {
+            if let message = data["Message"] as? [String:AnyObject] {
+                if let transferAmount = message["TransferAmount"] as? [String:AnyObject] {
+                    return transferAmount["Value"] as? Double ?? -1.0
+                }
+            }
+        }
+        
+        return -1.0
+    }
+    
+    func speak(price: String) {
+        let speechSynthesizer = AVSpeechSynthesizer()
+        let speech = price + " işlem yapılıyor, onaylıyor musunuz?"
+        let speechUtterance: AVSpeechUtterance = AVSpeechUtterance(string: speech)
+        
+        speechUtterance.rate = AVSpeechUtteranceMaximumSpeechRate / 2.0
+        speechUtterance.voice = AVSpeechSynthesisVoice(language: "tr-TR")
+        
+        speechSynthesizer.speak(speechUtterance)
+    }
+    
+    func getApiResponse(url: String, params: String? = nil, isGet: Bool, hasBody: Bool, body: NSDictionary) -> NSDictionary {
         var apiRequestResolved = false
         var apiResponse : NSDictionary = [:]
         
@@ -104,10 +169,17 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         let url = URL(string: url)!
         var request = URLRequest(url: url)
         
-        if params == nil {
+        if isGet {
             request.httpMethod = "GET"
         } else {
             request.httpMethod = "POST"
+            
+            if hasBody {
+                request.httpBody = body as? Data
+            }
+        }
+        
+        if params == nil {
             request.httpBody = params?.data(using: .utf8)
         }
         
@@ -149,6 +221,11 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         
         print(" >")
         return apiResponse
+    }
+    
+    func getIp() -> String {
+        let authenticationIpApiResponse = self.getApiResponse(url: "https://api.ipify.org/?format=json", isGet: true, hasBody: false, body: NSDictionary())
+        return authenticationIpApiResponse["ip"]! as! String
     }
 
     override func didReceiveMemoryWarning() {

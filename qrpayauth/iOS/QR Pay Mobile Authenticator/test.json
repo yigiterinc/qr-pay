@@ -1,0 +1,44 @@
+{
+    "type": "CallTransactionCommand",
+    "TransactionName": "MoneyTransferToOtherAccountFlow",
+    "ClientIPAddress": "89.39.107.196",
+    "Culture": "tr-TR",
+    "data": {
+        "RequestTypeName": "MoneyTransferFlowRequest",
+        "ApplicationToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDbGllbnRJcCI6IjEwLjMwLjYuMTQxIiwiVG9rZW5EYXRlVGltZSI6IjI3LjAyLjIwMjAgMTQ6MTk6NDUiLCJUb2tlblNjb3BlIjoiSGFja2F0aG9uIiwiQXBwbGljYXRpb25OYW1lIjoiSGFja2F0aG9uIiwibmJmIjoxNTgyODAyMzg1LCJleHAiOjE4OTgxNjIzODUsImlhdCI6MTU4MjgwMjM4NX0.Fhk0fyGyEDROfl63PhwjYAmb5r37ti8qOziHI4_anWk",
+        "Message": {
+            "$type": "VeriBranch.Common.MessageDefinitions.MoneyTransferFlowRequest, VeriBranch.Common.MessageDefinitions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "SourceAccount": {
+                "BranchCode": "9043",
+                "Number": "682786",
+                "Suffix": "352",
+                "Branch": {
+                    "Name": "Kozyatagı Şube",
+                    "Code": "9043"
+                },
+                "Currency": {
+                    "Code": "TRY",
+                    "Name": "TL"
+                },
+                "IBAN": "TR450012400000068278600001"
+            },
+            "TransferAmount": {
+                "Value":150.25,
+                "Currency": {
+                    "Code": "TRY",
+                    "Name": "TL"
+                }
+            },
+            "EFTPaymentType": 4,
+            "Description": "Hesaba Havale İşlemi",
+            "RecipientAccountInfo": {
+                "Branch": {
+                    "Code": "9043"
+                },
+                "Number": 683922,
+                "Suffix": 351
+            }
+        }
+    }
+}
+

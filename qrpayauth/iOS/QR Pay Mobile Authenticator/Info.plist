@@ -39,6 +39,12 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>May I use the camera?</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>May I use your microphone?</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Hello may I use speech recognition?</string>
+	<key>UIBackgroundModes</key>
+	<array/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -51,10 +57,6 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>May I use your microphone?</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Hello may I use speech recognition?</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
